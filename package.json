@@ -1,0 +1,23 @@
+{
+  "name": "quiz-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-react": "cd quiz-app-react && npm run build:ci",
+    "ci": "cd quiz-app-react && npm install && cd ..",
+    "build:ci": "npm run build-react"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-with-ahsan/quiz-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/code-with-ahsan/quiz-app/issues"
+  },
+  "homepage": "https://github.com/code-with-ahsan/quiz-app#readme"
+}

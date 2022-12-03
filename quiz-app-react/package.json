@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:ci": "npm run build -- --outDir=../build/react --base=/quiz-app/react/"
   },
   "dependencies": {
     "react": "^18.2.0",

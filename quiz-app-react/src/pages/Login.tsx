@@ -1,16 +1,23 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../store";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const setUserNameInState = useAppStore((state) => state.setUsername);
+  const isLoggedIn = useAppStore((state) => !!state.username);
   const navigate = useNavigate();
   const onFormSubmit = (event: FormEvent) => {
     event.preventDefault();
     setUserNameInState(username);
-    navigate("/");
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn]);
+
   return (
     <div className="max-w-md mx-auto my-16">
       <div className="rounded-md shadow-md bg-white p-4">

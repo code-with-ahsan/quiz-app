@@ -2,7 +2,7 @@ import create from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 const quizzesURL =
-  "https://gist.githubusercontent.com/AhsanAyaz/7d9d0a0949308716725794bf90266cf7/raw/c433c816e22686ed2dc688efbe8dcb8500230034/javascript-questions.json";
+  "https://gist.githubusercontent.com/AhsanAyaz/7d9d0a0949308716725794bf90266cf7/raw/5c00ca826c8f29aec93f7e7e329f6cbd58bc9180/javascript-questions.json";
 
 const SCORE_PER_QUESTION = 5;
 
@@ -27,13 +27,16 @@ export interface AppStore {
   pickQuestion: (questions?: QuizQuestion[]) => void;
   getQuestions: () => void;
   answerQuestion: (question: QuizQuestion, answerId: string) => void;
+  resetQuiz: () => void;
 }
 
-const questionsAsked = (questions: QuizQuestion[]) => {
-  return questions.filter((question) => !!question.asked);
+const getRandomQuestion = (questions: QuizQuestion[]) => {
+  const remainingQuestions = questionsRemaining(questions);
+  const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+  return remainingQuestions[randomIndex];
 };
 
-const questionsRemaining = (questions: QuizQuestion[]) => {
+const questionsRemaining = (questions: QuizQuestion[]): QuizQuestion[] => {
   return questions.filter((question) => !question.asked);
 };
 
@@ -79,12 +82,24 @@ export const useAppStore = create<AppStore>()(
         },
         pickQuestion: () =>
           set((state) => {
-            const questions = questionsRemaining(state.questions);
-            const randomIndex = Math.floor(Math.random() * questions.length);
-            const randomQuestion = questions[randomIndex];
+            const randomQuestion = getRandomQuestion(state.questions);
             return {
               ...state,
               currentQuestion: randomQuestion,
+            };
+          }),
+        resetQuiz: () =>
+          set((state) => {
+            const resettedQuestions = state.questions.map((question) => ({
+              ...question,
+              asked: false,
+            }));
+            const randomQuestion = getRandomQuestion(resettedQuestions);
+            return {
+              ...state,
+              score: 0,
+              currentQuestion: randomQuestion,
+              questions: resettedQuestions,
             };
           }),
       }),
