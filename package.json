@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-react": "cd quiz-app-react && npm run build:ci",
-    "ci": "cd quiz-app-react && npm install && cd ..",
-    "build:ci": "npm run build-react"
+    "build:react": "cd quiz-app-react && npm run build:ci",
+    "serve:react": "cd quiz-app-react && npm run dev",
+    "serve:angular": "cd quiz-app-angular && npm run start",
+    "build:angular": "cd quiz-app-angular && npm run build:ci",
+    "ci": "cd quiz-app-react && npm install && cd .. && cd quiz-app-angular && npm install && cd ..",
+    "build:ci": "npm run build:react && npm run build:angular"
   },
   "repository": {
     "type": "git",
